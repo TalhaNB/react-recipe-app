@@ -1,8 +1,9 @@
 import React from "react"
+import "../css/RecipeForm.css"
 
 function RecipeForm() {
   return (
-    <div className="wrapper">
+    <div className="wrapper form">
       <form method="post">
         <input
           type="hidden"
@@ -10,7 +11,7 @@ function RecipeForm() {
           value="mCydi42mNBwPil6rk6j8vgLZKEQ0zDIH7hTqKJlEsFBFc6u8nPo_6HHe1qXlQYzDfl3zEOfEu1eCxCuDDR1oVQ"
         />
         <div>
-          <label for="recipe_Title">Title</label> &nbsp;
+          <label htmlFor="recipe_Title">Title</label> &nbsp;
           <input
             placeholder="Title of Recipe"
             type="text"
@@ -20,7 +21,8 @@ function RecipeForm() {
         </div>
         <div className="mini-flex">
           <div>
-            <label for="recipe_main_ingredient">Main ingredient</label> &nbsp;
+            <label htmlFor="recipe_main_ingredient">Main ingredient</label>{" "}
+            &nbsp;
             <input
               placeholder="What is the main ingredient?"
               type="text"
@@ -29,7 +31,7 @@ function RecipeForm() {
             />
           </div>
           <div>
-            <label for="recipe_time">Time</label> &nbsp;
+            <label htmlFor="recipe_time">Time</label> &nbsp;
             <input
               placeholder="Minutes"
               type="text"
@@ -37,10 +39,8 @@ function RecipeForm() {
               id="recipe_time_required"
             />
           </div>
-        </div>
-        <div className="mini-flex">
           <div>
-            <label for="recipe_cuisine">Cuisine</label> &nbsp;
+            <label htmlFor="recipe_cuisine">Cuisine</label> &nbsp;
             <select name="recipe[cuisine]" id="recipe_cuisine">
               <option value="Other">Other</option>
               <option value="Breakfast">Breakfast</option>
@@ -60,7 +60,7 @@ function RecipeForm() {
             </select>
           </div>
           <div>
-            <label for="recipe_spiciness">Spiciness</label>
+            <label htmlFor="recipe_spiciness">Spiciness</label>
             <select name="recipe[spiciness_level]" id="recipe_spiciness_level">
               <option value="Bland">Bland</option>
               <option value="Normal">Normal</option>
@@ -70,21 +70,22 @@ function RecipeForm() {
             </select>
           </div>
         </div>
+        <div className="mini-flex"></div>
         <div>
-          <label for="recipe_ingredients">Ingredients</label>
+          <label htmlFor="recipe_ingredients">Ingredients</label>
           <textarea id="recipe_ingredients" name="editor"></textarea>
         </div>
         <div>
-          <label for="recipe_recipe">Recipe</label>
+          <label htmlFor="recipe_recipe">Recipe</label>
           <textarea id="recipe_recipe" name="editor"></textarea>
         </div>
         <div className="mini-flex">
           <div>
-            <label for="recipe_cover">Cover</label>
+            <label htmlFor="recipe_cover">Cover</label>
             <input type="file" name="recipe[photo]" id="recipe_photo" />
           </div>
           <div>
-            <label for="recipe_gallery">Gallery</label>
+            <label htmlFor="recipe_gallery">Gallery</label>
             <input
               multiple="multiple"
               type="file"
@@ -92,10 +93,8 @@ function RecipeForm() {
               id="recipe_images"
             />
           </div>
-        </div>
-        <div>
           <div>
-            <label for="recipe_video">Video</label>
+            <label htmlFor="recipe_video">Video</label>
             <input type="file" name="recipe[video]" id="recipe_video" />
           </div>
         </div>

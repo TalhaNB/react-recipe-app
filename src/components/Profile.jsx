@@ -1,10 +1,11 @@
 import React from "react"
 import { useParams } from "react-router-dom"
 
-function Profile(props) {
+function Profile() {
   let { username } = useParams()
+
   return (
-    <div>
+    <div className="wrapper">
       <h1>{username}'s Profile</h1>
     </div>
   )

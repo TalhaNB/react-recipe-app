@@ -274,3 +274,8 @@ h6 span {
   width: auto;
   display: block;
 }
+
+#error {
+  color: red;
+  display: none;
+}
