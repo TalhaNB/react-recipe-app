@@ -6,9 +6,7 @@ function Home(props) {
   const { title, show, recipeData } = props
 
   const renderReipes = () =>
-    recipeData.map(
-      (recipe, id) => <RecipeCard recipeData={recipe} key={id} />
-    )
+    recipeData.map((recipe, id) => <RecipeCard recipeData={recipe} id={id} />)
 
   return (
     <div>

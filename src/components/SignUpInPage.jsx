@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
 import Paper from "@mui/material/Paper"
+
 function SignUpInPage(props) {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()

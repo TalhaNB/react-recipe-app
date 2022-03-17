@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useNavigate } from "react-router-dom"
 import Card from "@mui/material/Card"
 import Stack from "@mui/material/Stack"
 import Divider from "@mui/material/Divider"
@@ -12,11 +13,15 @@ import Typography from "@mui/material/Typography"
 import { red, green } from "@mui/material/colors"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import ShareIcon from "@mui/icons-material/Share"
-import MoreVertIcon from "@mui/icons-material/MoreVert"
+import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import dateFormat from "dateformat"
 
 function RecipeCard(props) {
+  const navigate = useNavigate()
   const recipe = props.recipeData
+  const handleClick = () => {
+    navigate("/recipe/" + props.id + "/" + recipe.slug)
+  }
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -29,8 +34,8 @@ function RecipeCard(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+          <IconButton aria-label="settings" onClick={handleClick}>
+            <OpenInNewIcon />
           </IconButton>
         }
         title={recipe.title}

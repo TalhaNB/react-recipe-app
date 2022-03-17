@@ -93,7 +93,7 @@ function RecipeForm() {
             spiciness: formValues.spiciness,
             serving: parseInt(formValues.serves),
             isdraft: isDraft,
-            username: JSON.parse(document.cookie).username,
+            user_id: JSON.parse(document.cookie).username,
           },
         },
         {

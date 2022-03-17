@@ -50,6 +50,10 @@ function App() {
     }
   }, [logged_in])
 
+  const fetchRecipe = (index) => {
+    return recipeData[index]
+  }
+
   return (
     <BrowserRouter>
       <Navbar loginState={logged_in} setLoggedIn={setLoggedIn} />
@@ -76,7 +80,12 @@ function App() {
             }
           />
         )}
-        {logged_in && <Route path="/recipes/:id" element={<RecipePage />} />}
+        {logged_in && (
+          <Route
+            path="/recipe/:key/:slug"
+            element={<RecipePage fetchRecipe={fetchRecipe} />}
+          />
+        )}
         {logged_in && <Route path="/recipes/new" element={<RecipeForm />} />}
         {logged_in && <Route path="/profile/:username" element={<Profile />} />}
         <Route
