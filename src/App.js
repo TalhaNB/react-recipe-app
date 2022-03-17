@@ -13,9 +13,9 @@ import axios from "axios"
 function App() {
   const [logged_in, setLoggedIn] = useState(
     document.cookie && JSON.parse(document.cookie).logged_in
-  );
-  const [recipeData, setRecipeData] = useState([]);
-  const cookie = document.cookie ? JSON.parse(document.cookie) : false;
+  )
+  const [recipeData, setRecipeData] = useState([])
+  const cookie = document.cookie ? JSON.parse(document.cookie) : false
 
   useEffect(() => {
     if (logged_in) {
@@ -41,7 +41,6 @@ function App() {
           },
         })
         .then((res) => {
-          console.dir(res)
           setRecipeData(res.data)
         })
         .catch((error) => {
@@ -49,11 +48,11 @@ function App() {
           console.log("Could not fetch???")
         })
     }
-  }, [logged_in]);
+  }, [logged_in])
 
   return (
     <BrowserRouter>
-      <Navbar loginState={logged_in} setLoggedIn={setLoggedIn} user={"talha"} />
+      <Navbar loginState={logged_in} setLoggedIn={setLoggedIn} />
       <Routes>
         <Route
           path="/"
@@ -65,25 +64,26 @@ function App() {
             />
           }
         />
-        <Route
-          path="/recipes"
-          element={
-            <Home title="User Submissions" show="all" recipeData={recipeData} />
-          }
-        />
-        <Route path="/recipes/:id" element={<RecipePage />} />
-        <Route
-          path="/recipes/new"
-          element={logged_in ? <RecipeForm /> : <Lost />}
-        />
-        <Route
-          path="/profile/:username"
-          element={logged_in ? <Profile /> : <Lost />}
-        />
+        {logged_in && (
+          <Route
+            path="/recipes"
+            element={
+              <Home
+                title="User Submissions"
+                show="all"
+                recipeData={recipeData}
+              />
+            }
+          />
+        )}
+        {logged_in && <Route path="/recipes/:id" element={<RecipePage />} />}
+        {logged_in && <Route path="/recipes/new" element={<RecipeForm />} />}
+        {logged_in && <Route path="/profile/:username" element={<Profile />} />}
         <Route
           path="/login"
           element={<SignUpInPage setLoggedIn={setLoggedIn} />}
         />
+        <Route path="*" element={<Lost />} />
       </Routes>
     </BrowserRouter>
   )

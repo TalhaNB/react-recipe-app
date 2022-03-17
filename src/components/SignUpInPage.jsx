@@ -1,44 +1,45 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import "../css/Login.css"
 import axios from "axios"
-
+import InputLabel from "@mui/material/InputLabel"
+import FormControl from "@mui/material/FormControl"
+import Input from "@mui/material/Input"
+import Button from "@mui/material/Button"
+import Divider from "@mui/material/Divider"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import Paper from "@mui/material/Paper"
 function SignUpInPage(props) {
-  // This allow to update value of "email" and "password" as user types it
-  const useFormInput = (initialValue) => {
-    const [value, setValue] = useState(initialValue)
-
-    const handleChange = (e) => {
-      setValue(e.target.value)
-    }
-    return {
-      value,
-      onChange: handleChange,
-    }
-  }
-  // "email", "password" are temp variables to allow passing the value back to the user state || navigate is a hook being used to redirec to home page on successfull signup
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [username, setUsername] = useState()
+  const [loginFailed, setLoginFailed] = useState(false)
+  const [signUpFailed, setSignUpFailed] = useState("")
   const navigate = useNavigate()
-  const email = useFormInput("")
-  const password = useFormInput("")
-  const username = useFormInput("")
+
   const handleSignUp = () => {
     axios
       .post(`http://localhost:4000/users`, {
         user: {
-          username: username.value,
-          email: email.value,
-          password: password.value,
+          username: username,
+          email: email,
+          password: password,
         },
       })
-      .then(() => {
-        navigate("/")
+      .then((res) => {
+        if (res.data.message === "Sign Up Failed") {
+          setSignUpFailed(res.data.errors[0])
+        } else {
+          navigate("/")
+        }
       })
   }
+
   const handleLogin = async () => {
     // Send a Request to API and get AUTH Key
     await axios
       .post(`http://localhost:4000/users/sign_in`, {
-        user: { email: email.value, password: password.value },
+        user: { email: email, password: password },
       })
       .then((res) => {
         // Saving Login status, auth and username to maintain user session even after browser reopened.
@@ -48,129 +49,137 @@ function SignUpInPage(props) {
           auth: res.headers.authorization,
         })
         props.setLoggedIn(true)
+        navigate("/")
       })
       .catch(function (error) {
-        console.log(error.message)
+        setLoginFailed(true)
       })
-    if (JSON.parse(document.cookie).logged_in) {
-      // Redirect to home
-      navigate("/")
-    } else {
-      document.getElementById("error").style.display = "block"
-    }
   }
   return (
-    <div className="section">
-      <div className="container">
-        <div className="row full-height justify-content-center">
-          <div className="col-12 text-center mt-5 py-5">
-            <div className="section pb-5 pt-5 pt-sm-2 text-center">
-              <h6 className="mb-0 pb-3">
-                <span>Log In </span>
-                <span>Sign Up</span>
-              </h6>
-              <input
-                className="checkbox"
-                type="checkbox"
-                id="reg-log"
-                name="reg-log"
-              />
-              <label htmlFor="reg-log"></label>
-              <div className="card-3d-wrap mx-auto">
-                <div className="card-3d-wrapper">
-                  <div className="card-front">
-                    <div className="center-wrap">
-                      <div className="section text-center">
-                        <h4 className="mb-4 pb-3">Log In</h4>
-                        <div className="form-group">
-                          <input
-                            type="email"
-                            {...email}
-                            name="logemail"
-                            className="form-style"
-                            placeholder="Email"
-                            autoComplete="off"
-                          />
-                          <i className="input-icon uil uil-at"></i>
-                        </div>
-                        <div className="form-group mt-2">
-                          <input
-                            type="password"
-                            {...password}
-                            name="logpass"
-                            className="form-style"
-                            placeholder="Your Password"
-                            id="logpass"
-                            autoComplete="off"
-                          />
-                          <i className="input-icon uil uil-lock-alt"></i>
-                        </div>
-                        <p className="mb-0 mt-4 text-center" id="error">
-                          Invalid Credentials
-                        </p>
-                        <a href="#" onClick={handleLogin} className="btn mt-4">
-                          submit
-                        </a>
-                        <p className="mb-0 mt-4 text-center">
-                          <a href="#0" className="link">
-                            Forgot your password?
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-back">
-                    <div className="center-wrap">
-                      <div className="section text-center">
-                        <h4 className="mb-4 pb-3">Sign Up</h4>
-                        <div className="form-group">
-                          <input
-                            type="text"
-                            {...username}
-                            name="logname"
-                            className="form-style"
-                            placeholder="Username"
-                            id="logname"
-                            autoComplete="off"
-                          />
-                          <i className="input-icon uil uil-user"></i>
-                        </div>
-                        <div className="form-group mt-2">
-                          <input
-                            type="email"
-                            {...email}
-                            name="logemail"
-                            className="form-style"
-                            placeholder="Your Email"
-                            id="logemail"
-                            autoComplete="off"
-                          />
-                          <i className="input-icon uil uil-at"></i>
-                        </div>
-                        <div className="form-group mt-2">
-                          <input
-                            type="password"
-                            {...password}
-                            name="logpass"
-                            className="form-style"
-                            placeholder="Your Password"
-                            autoComplete="off"
-                          />
-                          <i className="input-icon uil uil-lock-alt"></i>
-                        </div>
-                        <a href="#" onClick={handleSignUp} className="btn mt-4">
-                          submit
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Paper elevation={3}>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        height={"50vh"}
+      >
+        <Grid item xs={5}>
+          <Grid container direction="column" spacing={3} alignItems="center">
+            <Grid item>
+              <Typography variant="h5" gutterBottom component="div">
+                Login
+              </Typography>
+            </Grid>
+            {loginFailed && (
+              <Grid item>
+                <Typography
+                  variant="caption"
+                  display="block"
+                  color="red"
+                  gutterBottom
+                >
+                  Invalid Credentials
+                </Typography>
+              </Grid>
+            )}
+            <Grid item>
+              <FormControl variant="standard">
+                <InputLabel htmlFor="email">Name</InputLabel>
+                <Input
+                  id="email"
+                  onChange={(e) => {
+                    setEmail(e.currentTarget.value)
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl variant="standard">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  onChange={(e) => {
+                    setPassword(e.currentTarget.value)
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" onClick={handleLogin}>
+                Login
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Divider orientation="vertical" flexItem>
+          OR
+        </Divider>
+        <Grid item xs={5}>
+          <Grid container direction="column" spacing={3} alignItems="center">
+            <Grid item>
+              <Typography variant="h5" gutterBottom component="div">
+                Sign Up
+              </Typography>
+            </Grid>
+            <Grid item>
+              {signUpFailed && (
+                <Grid item>
+                  <Typography
+                    variant="caption"
+                    display="block"
+                    color="red"
+                    gutterBottom
+                  >
+                    {signUpFailed}
+                  </Typography>
+                </Grid>
+              )}
+            </Grid>
+            <Grid item>
+              <FormControl variant="standard">
+                <InputLabel htmlFor="username">Username</InputLabel>
+                <Input
+                  id="username"
+                  onChange={(e) => {
+                    setUsername(e.currentTarget.value)
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl variant="standard">
+                <InputLabel htmlFor="email">Email</InputLabel>
+                <Input
+                  id="email"
+                  onChange={(e) => {
+                    setEmail(e.currentTarget.value)
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl variant="standard">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  onChange={(e) => {
+                    setPassword(e.currentTarget.value)
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" onClick={handleSignUp}>
+                Sign Up
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Paper>
   )
 }
 

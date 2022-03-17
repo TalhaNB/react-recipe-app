@@ -1,7 +1,7 @@
 @import url("http://fonts.cdnfonts.com/css/roboto");
 
 :root {
-  --background: rgba(12, 36, 97, 0.85);
+  --background: rgba(255, 218, 121, 1);
 }
 
 *,
@@ -16,8 +16,8 @@ body {
   font-weight: 300;
   font-size: 15px;
   line-height: 1.7;
-  background-color: rgba(44, 62, 80, 1);
-  color: white;
+  background-color: rgba(255, 218, 121, 0.1);
+  color: black;
   overflow-x: hidden;
   min-height: calc(100vh - 90px);
 }
@@ -69,10 +69,20 @@ body {
 .lost {
   font-family: "Roboto", sans-serif;
   font-weight: 900;
-  color: white;
+  color: black;
   text-transform: uppercase;
   font-size: 2em;
   text-align: center;
+}
+/* form {
+  width: 80vw;
+  padding: 2em;
+  margin: auto;
+} */
+div[role="textbox"] {
+  height: 50vh;
+  overflow-y: scroll;
+  color: black;
 }
 @media only screen and (min-width: 768px) {
   .recipe-card-grid {
@@ -82,5 +92,9 @@ body {
 @media only screen and (min-width: 1366px) {
   .recipe-card-grid {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media only screen and (max-width: 600px) {
+  * {
   }
 }
